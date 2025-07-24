@@ -11,12 +11,12 @@ final List<Product> products = [
       description: "Latest iPhone with titanium design, A17 Pro chip, and advanced camera system",
       image: "https://example.com/images/iphone15pro.jpg",
     ),
-    // Product(
-    //   productName: "Samsung Galaxy S24 Ultra",
-    //   price: 1199.99,
-    //   description: "Premium Android smartphone with S Pen, 200MP camera, and AI features",
-    //   image: "https://example.com/images/galaxys24ultra.jpg",
-    // ),
+    Product(
+      productName: "Samsung Galaxy S24 Ultra",
+      price: 1199.99,
+      description: "Premium Android smartphone with S Pen, 200MP camera, and AI features",
+      image: "https://example.com/images/galaxys24ultra.jpg",
+    ),
     Product(
       productName: "MacBook Air M3",
       price: 1299.99,

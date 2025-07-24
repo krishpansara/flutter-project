@@ -1,3 +1,4 @@
+// import 'package:first/notes_app/notes.dart';
 import 'package:flutter/material.dart';
 import 'cart_page.dart';
 
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: CartPage(),
+      // home: NoteScreen(),
+
     );
   }
 }
