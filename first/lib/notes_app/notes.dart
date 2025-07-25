@@ -61,12 +61,30 @@ class _NotesScreenState extends State<NotesScreen> {
                   (context, index) => ListTile(
                     title: Text(notes[index].title),
                     subtitle: Text(notes[index].description),
-                    trailing: IconButton(
-                      onPressed: (){
-                        
-                      },
-                      icon : Icon(Icons.delete),
+                    trailing: SizedBox(
+                      // width: 80,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: (){
+                              titleTxtCntrl.text = notes[index].title;
+                              descTxtCntrl.text = notes[index].description;
+                              notes.removeAt(index);
+                              setState(() {});
+                            },
+                            icon : Icon(Icons.edit),
+                            ),
+                          IconButton(
+                            onPressed: (){
+                              notes.removeAt(index);
+                              setState(() {});
+                            },
+                            icon : Icon(Icons.delete),
+                            ),
+                        ],
                       ),
+                    ),
                   ),
             ),
           ),
