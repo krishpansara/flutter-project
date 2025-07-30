@@ -9,9 +9,11 @@ class StopwatchExperiemnt extends StatefulWidget {
 }
 
 class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
-  int seconds = 0;
-  bool isTicking = false;
+  double seconds = 0;
   late Timer timer;
+  bool isTicking = false;
+  int millis = 0;
+  final laps = <double>[];
   String _secondtoText() => seconds <= 1 ? 'Second' : 'Seconds';
   @override
   Widget build(BuildContext context) {
@@ -23,71 +25,134 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-              child: Text(
-                '$seconds ${_secondtoText()}',
-                style: Theme.of(context).textTheme.headlineMedium,
+            Expanded(
+              child: Center(
+                child: Text(
+                  '$seconds ${_secondtoText()}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: isTicking ? null : _startTimer,
-                  style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.green),
-                    foregroundColor: WidgetStatePropertyAll(Colors.white),
-                  ),
-                  child: Text("Start"),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: isTicking ? _stopTimer : null,
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.red),
-                    foregroundColor: WidgetStatePropertyAll(Colors.white),
-                  ),
-                  child: Text("Stop"),
-                ),
-              ],
-            ),
+            Expanded(child: controlPanel()),
+            Expanded(child: _builderDisplay()),
           ],
-        )
-      );
+        ));
+  }
+
+  Row controlPanel() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        ElevatedButton(
+          onPressed: isTicking ? null : _starttimer,
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.green),
+            foregroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+          child: const Text("Start"),
+        ),
+        const SizedBox(width: 10),
+        ElevatedButton(
+          onPressed: isTicking ? _stoptimer : null,
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.red),
+            foregroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+          child: const Text("Stop"),
+        ),
+        const SizedBox(width: 10),
+        ElevatedButton(
+          onPressed: _lapClick,
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.amber),
+            foregroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+          child: const Text("Lap"),
+        ),
+        const SizedBox(width: 10),
+        ElevatedButton(
+          onPressed: _resetTimer,
+          style: const ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(Colors.blueGrey),
+            foregroundColor: WidgetStatePropertyAll(Colors.white),
+          ),
+          child: const Text("Reset"),
+        ),
+      ],
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(seconds: 1), _onTick);
   }
 
-  void _startTimer(){
-    timer = Timer.periodic(const Duration(seconds: 1), _onTick);
+  void _starttimer() {
+    timer = Timer.periodic(const Duration(milliseconds: 100), _onTick);
     setState(() {
       isTicking = true;
-      seconds = 0;
     });
   }
 
-  void _stopTimer(){
+  void _lapClick() {
+    if (isTicking) {
+      setState(() {
+        laps.add(seconds);
+        // millis = 0;
+      });
+    }
+  }
+
+  void _stoptimer() {
     timer.cancel();
-    seconds = 0;
     setState(() {
       isTicking = false;
+    });
+  }
+
+  void _resetTimer() {
+    timer.cancel();
+    setState(() {
+      isTicking = false;
+      millis = 0;
+      seconds = 0;
+      laps.clear();
     });
   }
 
   void _onTick(Timer timer) {
     if (mounted) {
       setState(() {
-        seconds++;
+        millis += 100;
+        seconds = millis / 1000;
       });
     }
+  }
+
+  // Widget _buildDisplay() {
+  //   return ListView(
+  //     children: [
+  //       for (double i in laps)
+  //         ListTile(
+  //           leading: const Icon(Icons.timer),
+  //           title: Text('Lap ${laps.indexOf(i) + 1}: $i seconds'),
+  //           trailing: const Icon(Icons.delete),
+  //         ),
+  //     ],
+  //   );
+  // }
+
+  Widget _builderDisplay(){
+    return ListView.builder(
+      itemCount: laps.length,
+      itemBuilder: (context, index) =>
+        ListTile(
+        leading: const Icon(Icons.timer),
+        title: Text('Lap ${index + 1}: ${laps[index]} seconds'),
+        trailing: const Icon(Icons.delete),
+      ),
+    );
   }
 
   @override
