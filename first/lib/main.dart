@@ -1,6 +1,7 @@
 // import 'package:first/notes_app/notes.dart';
 // import 'package:first/e-com/login_page.dart';
-import 'package:first/e-com/splash_screen.dart';
+import 'package:first/bmi/screens/bmi_calc.dart';
+// import 'package:first/e-com/splash_screen.dart';
 import 'package:flutter/material.dart';
 // import 'e-com/cart_page.dart';
 
@@ -18,14 +19,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Ecom App',
       theme: ThemeData(
-      
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home: CartPage(),
       // home: NotesScreen(),
       // home: LoginPage(),
-      home: SplashScreen(),
-
+      // home: SplashScreen(),
+      home: BmiCalcScreen(),
     );
   }
 }
