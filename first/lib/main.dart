@@ -4,6 +4,7 @@
 import 'package:first/counter/counter_screen.dart';
 // import 'package:first/e-com/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 // import 'e-com/cart_page.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Ecom App',
       theme: ThemeData(
@@ -34,3 +35,11 @@ class MyApp extends StatelessWidget {
 }
 
 
+
+
+/*
+create quiz app with following screens 
+start screen with instruction and start button
+, quiz screen display questions and four options as button lso on top display score and add bottom button for next or complete
+to display quiz score with details
+*/
