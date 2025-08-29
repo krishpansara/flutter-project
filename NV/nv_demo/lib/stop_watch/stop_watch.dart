@@ -20,7 +20,7 @@ class _StopwatchExperiemntState extends State<StopwatchExperiemnt> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.name),
+          title: Text(widget.name),  
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
